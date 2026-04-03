@@ -181,11 +181,20 @@
   .footer-block a:hover { color: rgba(255,255,255,0.9); }
   .footer-copy { max-width: 1440px; margin: 28px auto 0; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); font-family: var(--mono); font-size: 11px; color: rgba(255,255,255,0.3); letter-spacing: 0.06em; display: flex; justify-content: space-between; }
 
+  /* Cart overlay backdrop */
+  .cart-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 999; }
+  .cart-overlay.show { display: block; }
+  .cart-close-btn { display: none; background: none; border: none; color: rgba(255,255,255,0.7); font-size: 20px; cursor: pointer; padding: 0; line-height: 1; transition: color 0.2s; }
+  .cart-close-btn:hover { color: #f09070; }
+
   @media (max-width: 1060px) {
     .main-wrapper { grid-template-columns: 1fr; }
     .hero-inner { grid-template-columns: 1fr; }
     .footer-inner { grid-template-columns: 1fr; }
     .header-contact { display: none; }
+    .cart-sidebar.mobile-open { position: fixed; top: 0; right: 0; bottom: 0; width: 380px; max-width: 90vw; max-height: 100vh; z-index: 1000; border-radius: 0; border: none; box-shadow: -4px 0 30px rgba(0,0,0,0.2); animation: slideIn 0.25s ease-out; }
+    .cart-close-btn { display: block; }
+    @keyframes slideIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
   }
 </style>
 </head>
@@ -207,7 +216,7 @@
         <span class="hc-val">(626) 286-6429</span>
       </div>
     </div>
-    <button class="cart-btn">
+    <button class="cart-btn" onclick="toggleMobileCart()">
       ☰ Quote Cart <span class="cart-badge" id="cartCount">0</span>
     </button>
   </div>
@@ -268,10 +277,14 @@
     </div>
   </div>
 
-  <div class="cart-sidebar">
+  <div class="cart-overlay" id="cartOverlay" onclick="closeMobileCart()"></div>
+  <div class="cart-sidebar" id="cartSidebar">
     <div class="cart-top">
       <div class="cart-title">📋 Quote Request</div>
-      <button class="cart-clear-btn" onclick="clearCart()">Clear all</button>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <button class="cart-clear-btn" onclick="clearCart()">Clear all</button>
+        <button class="cart-close-btn" onclick="closeMobileCart()">✕</button>
+      </div>
     </div>
     <div class="cart-items" id="cartItems">
       <div class="cart-empty-msg">No items selected yet</div>
@@ -526,6 +539,29 @@ function startNewQuote() {
   const btn = document.querySelector('.submit-btn');
   btn.textContent = 'Submit Quote Request →';
   btn.disabled = false;
+  closeMobileCart();
+}
+
+// ─── MOBILE CART OVERLAY ────────────────────────────────
+function toggleMobileCart() {
+  const isMobile = window.matchMedia('(max-width: 1060px)').matches;
+  const sidebar = document.getElementById('cartSidebar');
+  const overlay = document.getElementById('cartOverlay');
+  if (isMobile) {
+    sidebar.classList.add('mobile-open');
+    overlay.classList.add('show');
+    document.body.style.overflow = 'hidden';
+  } else {
+    sidebar.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
+
+function closeMobileCart() {
+  const sidebar = document.getElementById('cartSidebar');
+  const overlay = document.getElementById('cartOverlay');
+  sidebar.classList.remove('mobile-open');
+  overlay.classList.remove('show');
+  document.body.style.overflow = '';
 }
 
 // ─── FILTERS ────────────────────────────────────────────
