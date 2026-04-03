@@ -294,6 +294,7 @@
       <div class="success-icon">✓</div>
       <h3>Request Submitted</h3>
       <p>Thank you — we've received your quote request and will be in touch within one business day to confirm details and arrange fulfillment.</p>
+      <button class="submit-btn" onclick="startNewQuote()" style="margin-top:1rem;">Start New Quote →</button>
     </div>
   </div>
 </div>
@@ -510,6 +511,21 @@ function submitOrder() {
     btn.textContent = 'Submit Quote Request →';
     btn.disabled = false;
   });
+}
+
+function startNewQuote() {
+  cart = {};
+  renderCart();
+  document.getElementById('f-name').value = '';
+  document.getElementById('f-company').value = '';
+  document.getElementById('f-email').value = '';
+  document.getElementById('f-phone').value = '';
+  document.getElementById('f-notes').value = '';
+  document.getElementById('successWrap').classList.remove('show');
+  document.getElementById('orderFormWrap').style.display = '';
+  const btn = document.querySelector('.submit-btn');
+  btn.textContent = 'Submit Quote Request →';
+  btn.disabled = false;
 }
 
 // ─── FILTERS ────────────────────────────────────────────
