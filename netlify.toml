@@ -1,6 +1,7 @@
 [build]
   publish = "."
   command = "python3 generate-manifests.py"
+  functions = "netlify/functions"
 
 [[headers]]
   for = "/*"
