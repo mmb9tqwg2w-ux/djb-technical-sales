@@ -208,10 +208,22 @@
       </div>
     </div>
     <button class="cart-btn">
-      ☰ Order Cart <span class="cart-badge" id="cartCount">0</span>
+      ☰ Quote Cart <span class="cart-badge" id="cartCount">0</span>
     </button>
   </div>
 </header>
+
+<!-- Hidden form for Netlify detection -->
+<form name="order-request" netlify netlify-honeypot="bot-field" hidden>
+  <input type="text" name="name">
+  <input type="text" name="company">
+  <input type="email" name="email">
+  <input type="tel" name="phone">
+  <textarea name="notes"></textarea>
+  <textarea name="items"></textarea>
+  <input type="text" name="estimated-total">
+  <input type="text" name="bot-field">
+</form>
 
 <div class="hero">
   <div class="hero-inner">
@@ -258,7 +270,7 @@
 
   <div class="cart-sidebar">
     <div class="cart-top">
-      <div class="cart-title">📋 Order Request</div>
+      <div class="cart-title">📋 Quote Request</div>
       <button class="cart-clear-btn" onclick="clearCart()">Clear all</button>
     </div>
     <div class="cart-items" id="cartItems">
@@ -275,13 +287,13 @@
       <div class="form-field"><input type="email" id="f-email" placeholder="Email Address *"></div>
       <div class="form-field"><input type="tel" id="f-phone" placeholder="Phone Number"></div>
       <div class="form-field"><textarea id="f-notes" placeholder="Special instructions, quantities, or questions…"></textarea></div>
-      <button class="submit-btn" onclick="submitOrder()">Send Order Request →</button>
-      <p class="form-note">Your request will be reviewed and we'll follow up to confirm availability, pricing, and shipping before finalizing your order.</p>
+      <button class="submit-btn" onclick="submitOrder()">Submit Quote Request →</button>
+      <p class="form-note">This sends your request directly to DJB Technical Sales. We'll follow up to confirm availability, pricing, and shipping.</p>
     </div>
     <div class="success-wrap" id="successWrap">
       <div class="success-icon">✓</div>
-      <h3>Request Received</h3>
-      <p>Thank you — we'll be in touch within one business day to confirm your order and arrange fulfillment.</p>
+      <h3>Request Submitted</h3>
+      <p>Thank you — we've received your quote request and will be in touch within one business day to confirm details and arrange fulfillment.</p>
     </div>
   </div>
 </div>
@@ -458,22 +470,46 @@ function submitOrder() {
   const phone = document.getElementById('f-phone').value.trim();
   const notes = document.getElementById('f-notes').value.trim();
   if (!name || !company || !email) { alert('Please fill in your name, company, and email address.'); return; }
-  if (!Object.keys(cart).length) { alert('Please add at least one item to your order.'); return; }
-  let body = `ORDER REQUEST — DJB Technical Sales\n${'─'.repeat(44)}\nName: ${name}\nCompany: ${company}\nEmail: ${email}\n`;
-  if (phone) body += `Phone: ${phone}\n`;
-  body += `${'─'.repeat(44)}\nITEMS REQUESTED:\n\n`;
+  if (!Object.keys(cart).length) { alert('Please add at least one item to your quote request.'); return; }
+  // Build items summary
+  let itemLines = [];
   let total = 0;
   Object.entries(cart).forEach(([code, {desc, price, qty}]) => {
     const line = price * qty;
     total += line;
-    body += `  ${code}\n  ${desc}\n  Qty: ${qty}  ×  $${price.toFixed(2)}  =  $${line.toFixed(2)}\n\n`;
+    itemLines.push(`${code} — ${desc} | Qty: ${qty} × $${price.toFixed(2)} = $${line.toFixed(2)}`);
   });
-  body += `${'─'.repeat(44)}\nEstimated Total: $${total.toFixed(2)}\n`;
-  if (notes) body += `\nNotes: ${notes}\n`;
-  const sub = encodeURIComponent(`Order Request from ${company} — DJB Technical Sales`);
-  window.location.href = `mailto:orders@djbtechnicalsales.com?subject=${sub}&body=${encodeURIComponent(body)}`;
-  document.getElementById('orderFormWrap').style.display = 'none';
-  document.getElementById('successWrap').classList.add('show');
+  const btn = document.querySelector('.submit-btn');
+  btn.textContent = 'Submitting…';
+  btn.disabled = true;
+  // Submit via Netlify Forms
+  const formData = new URLSearchParams();
+  formData.append('form-name', 'order-request');
+  formData.append('name', name);
+  formData.append('company', company);
+  formData.append('email', email);
+  formData.append('phone', phone);
+  formData.append('notes', notes);
+  formData.append('items', itemLines.join('\n'));
+  formData.append('estimated-total', '$' + total.toFixed(2));
+  fetch('/', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: formData.toString()
+  }).then(res => {
+    if (res.ok) {
+      document.getElementById('orderFormWrap').style.display = 'none';
+      document.getElementById('successWrap').classList.add('show');
+    } else {
+      alert('Something went wrong. Please try again or call us at (626) 286-1348.');
+      btn.textContent = 'Submit Quote Request →';
+      btn.disabled = false;
+    }
+  }).catch(() => {
+    alert('Connection error. Please try again or call us at (626) 286-1348.');
+    btn.textContent = 'Submit Quote Request →';
+    btn.disabled = false;
+  });
 }
 
 // ─── FILTERS ────────────────────────────────────────────
