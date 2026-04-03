@@ -1,0 +1,203 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "public/uploads"
+public_folder: "/uploads"
+
+# The editor UI lives at yoursite.netlify.app/admin
+# Rosie logs in with her Netlify Identity account
+
+collections:
+
+  - name: "blades"
+    label: "Blades & Cutting"
+    label_singular: "Blade / Cutting Item"
+    folder: "_data/blades"
+    create: true
+    slug: "{{slug}}"
+    identifier_field: "code"
+    summary: "{{active | ternary('✓','✗')}} {{code}} — {{description}}"
+    fields:
+      - { label: "Active (visible on site)", name: "active", widget: "boolean", default: true, hint: "Uncheck to hide this item without deleting it" }
+      - { label: "Item Code", name: "code", widget: "string", hint: "e.g. BLA 11-100" }
+      - { label: "Description", name: "description", widget: "string" }
+      - { label: "Unit Price ($)", name: "price", widget: "number", value_type: "float", min: 0, step: 0.01 }
+      - { label: "Show Quantity in Stock", name: "show_qty", widget: "boolean", default: false, hint: "Turn on to display a quantity field" }
+      - { label: "Quantity in Stock", name: "qty", widget: "number", value_type: "int", min: 0, required: false, hint: "Only shown on site if 'Show Quantity' is enabled" }
+
+  - name: "knives"
+    label: "Knives & Gravers"
+    label_singular: "Knife / Graver Item"
+    folder: "_data/knives"
+    create: true
+    slug: "{{slug}}"
+    identifier_field: "code"
+    summary: "{{active | ternary('✓','✗')}} {{code}} — {{description}}"
+    fields:
+      - { label: "Active (visible on site)", name: "active", widget: "boolean", default: true }
+      - { label: "Item Code", name: "code", widget: "string" }
+      - { label: "Description", name: "description", widget: "string" }
+      - { label: "Unit Price ($)", name: "price", widget: "number", value_type: "float", min: 0, step: 0.01 }
+      - { label: "Show Quantity in Stock", name: "show_qty", widget: "boolean", default: false }
+      - { label: "Quantity in Stock", name: "qty", widget: "number", value_type: "int", min: 0, required: false }
+
+  - name: "brushes"
+    label: "Brushes"
+    label_singular: "Brush Item"
+    folder: "_data/brushes"
+    create: true
+    slug: "{{slug}}"
+    identifier_field: "code"
+    summary: "{{active | ternary('✓','✗')}} {{code}} — {{description}}"
+    fields:
+      - { label: "Active (visible on site)", name: "active", widget: "boolean", default: true }
+      - { label: "Item Code", name: "code", widget: "string" }
+      - { label: "Description", name: "description", widget: "string" }
+      - { label: "Unit Price ($)", name: "price", widget: "number", value_type: "float", min: 0, step: 0.01 }
+      - { label: "Show Quantity in Stock", name: "show_qty", widget: "boolean", default: false }
+      - { label: "Quantity in Stock", name: "qty", widget: "number", value_type: "int", min: 0, required: false }
+
+  - name: "tapes"
+    label: "Tapes"
+    label_singular: "Tape Item"
+    folder: "_data/tapes"
+    create: true
+    slug: "{{slug}}"
+    identifier_field: "code"
+    summary: "{{active | ternary('✓','✗')}} {{code}} — {{description}}"
+    fields:
+      - { label: "Active (visible on site)", name: "active", widget: "boolean", default: true }
+      - { label: "Item Code", name: "code", widget: "string" }
+      - { label: "Description", name: "description", widget: "string" }
+      - { label: "Unit Price ($)", name: "price", widget: "number", value_type: "float", min: 0, step: 0.01 }
+      - { label: "Show Quantity in Stock", name: "show_qty", widget: "boolean", default: false }
+      - { label: "Quantity in Stock", name: "qty", widget: "number", value_type: "int", min: 0, required: false }
+
+  - name: "magnifiers"
+    label: "Magnifiers & Loupes"
+    label_singular: "Magnifier / Loupe Item"
+    folder: "_data/magnifiers"
+    create: true
+    slug: "{{slug}}"
+    identifier_field: "code"
+    summary: "{{active | ternary('✓','✗')}} {{code}} — {{description}}"
+    fields:
+      - { label: "Active (visible on site)", name: "active", widget: "boolean", default: true }
+      - { label: "Item Code", name: "code", widget: "string" }
+      - { label: "Description", name: "description", widget: "string" }
+      - { label: "Unit Price ($)", name: "price", widget: "number", value_type: "float", min: 0, step: 0.01 }
+      - { label: "Show Quantity in Stock", name: "show_qty", widget: "boolean", default: false }
+      - { label: "Quantity in Stock", name: "qty", widget: "number", value_type: "int", min: 0, required: false }
+
+  - name: "pins"
+    label: "Registration Pins & Tabs"
+    label_singular: "Pin / Tab Item"
+    folder: "_data/pins"
+    create: true
+    slug: "{{slug}}"
+    identifier_field: "code"
+    summary: "{{active | ternary('✓','✗')}} {{code}} — {{description}}"
+    fields:
+      - { label: "Active (visible on site)", name: "active", widget: "boolean", default: true }
+      - { label: "Item Code", name: "code", widget: "string" }
+      - { label: "Description", name: "description", widget: "string" }
+      - { label: "Unit Price ($)", name: "price", widget: "number", value_type: "float", min: 0, step: 0.01 }
+      - { label: "Show Quantity in Stock", name: "show_qty", widget: "boolean", default: false }
+      - { label: "Quantity in Stock", name: "qty", widget: "number", value_type: "int", min: 0, required: false }
+
+  - name: "pens"
+    label: "Pens & Markers"
+    label_singular: "Pen / Marker Item"
+    folder: "_data/pens"
+    create: true
+    slug: "{{slug}}"
+    identifier_field: "code"
+    summary: "{{active | ternary('✓','✗')}} {{code}} — {{description}}"
+    fields:
+      - { label: "Active (visible on site)", name: "active", widget: "boolean", default: true }
+      - { label: "Item Code", name: "code", widget: "string" }
+      - { label: "Description", name: "description", widget: "string" }
+      - { label: "Unit Price ($)", name: "price", widget: "number", value_type: "float", min: 0, step: 0.01 }
+      - { label: "Show Quantity in Stock", name: "show_qty", widget: "boolean", default: false }
+      - { label: "Quantity in Stock", name: "qty", widget: "number", value_type: "int", min: 0, required: false }
+
+  - name: "sandpaper"
+    label: "Sandpaper & Abrasives"
+    label_singular: "Sandpaper / Abrasive Item"
+    folder: "_data/sandpaper"
+    create: true
+    slug: "{{slug}}"
+    identifier_field: "code"
+    summary: "{{active | ternary('✓','✗')}} {{code}} — {{description}}"
+    fields:
+      - { label: "Active (visible on site)", name: "active", widget: "boolean", default: true }
+      - { label: "Item Code", name: "code", widget: "string" }
+      - { label: "Description", name: "description", widget: "string" }
+      - { label: "Unit Price ($)", name: "price", widget: "number", value_type: "float", min: 0, step: 0.01 }
+      - { label: "Show Quantity in Stock", name: "show_qty", widget: "boolean", default: false }
+      - { label: "Quantity in Stock", name: "qty", widget: "number", value_type: "int", min: 0, required: false }
+
+  - name: "cleanroom"
+    label: "Cleanroom & PPE"
+    label_singular: "Cleanroom / PPE Item"
+    folder: "_data/cleanroom"
+    create: true
+    slug: "{{slug}}"
+    identifier_field: "code"
+    summary: "{{active | ternary('✓','✗')}} {{code}} — {{description}}"
+    fields:
+      - { label: "Active (visible on site)", name: "active", widget: "boolean", default: true }
+      - { label: "Item Code", name: "code", widget: "string" }
+      - { label: "Description", name: "description", widget: "string" }
+      - { label: "Unit Price ($)", name: "price", widget: "number", value_type: "float", min: 0, step: 0.01 }
+      - { label: "Show Quantity in Stock", name: "show_qty", widget: "boolean", default: false }
+      - { label: "Quantity in Stock", name: "qty", widget: "number", value_type: "int", min: 0, required: false }
+
+  - name: "cleaning"
+    label: "Cleaning & Chemicals"
+    label_singular: "Cleaning / Chemical Item"
+    folder: "_data/cleaning"
+    create: true
+    slug: "{{slug}}"
+    identifier_field: "code"
+    summary: "{{active | ternary('✓','✗')}} {{code}} — {{description}}"
+    fields:
+      - { label: "Active (visible on site)", name: "active", widget: "boolean", default: true }
+      - { label: "Item Code", name: "code", widget: "string" }
+      - { label: "Description", name: "description", widget: "string" }
+      - { label: "Unit Price ($)", name: "price", widget: "number", value_type: "float", min: 0, step: 0.01 }
+      - { label: "Show Quantity in Stock", name: "show_qty", widget: "boolean", default: false }
+      - { label: "Quantity in Stock", name: "qty", widget: "number", value_type: "int", min: 0, required: false }
+
+  - name: "gauges"
+    label: "Pin Gages & Guides"
+    label_singular: "Pin Gage / Guide Item"
+    folder: "_data/gauges"
+    create: true
+    slug: "{{slug}}"
+    identifier_field: "code"
+    summary: "{{active | ternary('✓','✗')}} {{code}} — {{description}}"
+    fields:
+      - { label: "Active (visible on site)", name: "active", widget: "boolean", default: true }
+      - { label: "Item Code", name: "code", widget: "string" }
+      - { label: "Description", name: "description", widget: "string" }
+      - { label: "Unit Price ($)", name: "price", widget: "number", value_type: "float", min: 0, step: 0.01 }
+      - { label: "Show Quantity in Stock", name: "show_qty", widget: "boolean", default: false }
+      - { label: "Quantity in Stock", name: "qty", widget: "number", value_type: "int", min: 0, required: false }
+
+  - name: "misc"
+    label: "Miscellaneous"
+    label_singular: "Miscellaneous Item"
+    folder: "_data/misc"
+    create: true
+    slug: "{{slug}}"
+    identifier_field: "code"
+    summary: "{{active | ternary('✓','✗')}} {{code}} — {{description}}"
+    fields:
+      - { label: "Active (visible on site)", name: "active", widget: "boolean", default: true }
+      - { label: "Item Code", name: "code", widget: "string" }
+      - { label: "Description", name: "description", widget: "string" }
+      - { label: "Unit Price ($)", name: "price", widget: "number", value_type: "float", min: 0, step: 0.01 }
+      - { label: "Show Quantity in Stock", name: "show_qty", widget: "boolean", default: false }
+      - { label: "Quantity in Stock", name: "qty", widget: "number", value_type: "int", min: 0, required: false }
