@@ -131,7 +131,7 @@
   @keyframes spin { to { transform: rotate(360deg); } }
 
   /* CART */
-  .cart-sidebar { position: sticky; top: 136px; background: var(--white); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+  .cart-sidebar { position: sticky; top: 136px; background: var(--white); border: 1px solid var(--border); border-radius: 8px; overflow-y: auto; box-shadow: 0 4px 20px rgba(0,0,0,0.08); max-height: calc(100vh - 152px); }
   .cart-top { background: var(--navy); padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; }
   .cart-title { font-family: var(--sora); font-weight: 600; font-size: 14px; color: #fff; }
   .cart-clear-btn { font-family: var(--mono); font-size: 11px; color: rgba(255,255,255,0.45); background: none; border: none; cursor: pointer; letter-spacing: 0.08em; transition: color 0.2s; }
