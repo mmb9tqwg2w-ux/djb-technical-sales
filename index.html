@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DJB Technical Sales — PCB & Electronics Fabrication Supplies</title>
 <!-- js-yaml for parsing YAML data files -->
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/4.1.0/js-yaml.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&family=Lora:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -606,4 +607,11 @@ function buildCatalog() {
 loadCatalog();
 </script>
 </body>
+<script>
+  if (window.netlifyIdentity) {
+    window.netlifyIdentity.on("init", function(user) {
+      if (!user) { window.netlifyIdentity.on("login", function() { document.location.href = "/admin/"; }); }
+    });
+  }
+</script>
 </html>
